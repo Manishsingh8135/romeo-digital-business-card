@@ -1,0 +1,45 @@
+{
+  "id": "/",
+  "name": "Romeo’s Health Heaven",
+  "short_name": "Romeo’s",
+  "description": "A little closer to nature. Meet Romeo, discover cold-pressed juices and plant-based living, and keep in touch with Romeo’s Health Heaven in Brooklyn.",
+  "lang": "en-US",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#eeece4",
+  "theme_color": "#eeece4",
+  "icons": [
+    {
+      "src": "/assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Share Romeo’s card",
+      "short_name": "Share card",
+      "url": "/?view=share",
+      "icons": [
+        {
+          "src": "/assets/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "name": "romeo-ivory-card",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "python3 scripts/build.py",
+    "dev": "node scripts/serve.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "verify": "node scripts/verify-dist.mjs"
+  }
+}

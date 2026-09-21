@@ -1,0 +1,6 @@
+#romeo-ivory .rv-dock,#romeo-ivory .rv-hint,#romeo-ivory .rv-status,#romeo-ivory .rv-front-turn,#romeo-ivory .rv-ribbon,#romeo-ivory .rv-back,#romeo-ivory .rv-drawer{display:none}
+#romeo-ivory .rv-seal{pointer-events:none}
+body{display:block}
+.no-script{max-width:600px;margin:0 auto;padding:20px;font-size:14px;line-height:1.8;text-align:center;color:#294237}
+.no-script a{display:inline-block;padding:8px;overflow-wrap:anywhere}
+.no-script img{display:block;margin:12px auto}
