@@ -1,4 +1,4 @@
-const CACHE = 'romeo-card-af055b602496';
+const CACHE = 'romeo-card-af9a844c5002';
 const PRECACHE = ["/", "/app.mjs", "/assets/apple-touch-icon.png", "/assets/favicon-32.png", "/assets/fonts/cormorant-italic.ttf", "/assets/fonts/cormorant-roman.ttf", "/assets/fonts/dm-sans-0.ttf", "/assets/fonts/dm-sans-1.ttf", "/assets/icon-192.png", "/assets/icon-512.png", "/assets/icon-maskable-512.png", "/assets/images/beet-carrot.webp", "/assets/images/ginger-shot.webp", "/assets/images/logo.webp", "/assets/qr-card.png", "/config.mjs", "/no-script.css", "/romeo-health-heaven.vcf", "/sharing.mjs", "/site.webmanifest", "/styles.css", "/assets/qr-card.svg"];
 const ALLOWED = new Set(PRECACHE);
 
