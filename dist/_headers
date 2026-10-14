@@ -12,5 +12,8 @@
 /site.webmanifest
   Content-Type: application/manifest+json
 
+/assets/keep/*
+  Content-Disposition: attachment
+
 /sw.js
   Cache-Control: no-cache

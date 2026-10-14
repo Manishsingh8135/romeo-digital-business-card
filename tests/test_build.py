@@ -82,6 +82,20 @@ class BuildTests(unittest.TestCase):
         self.assertIn('rotateX(0deg) rotateY(0deg) rotateZ(0deg)',css)
         self.assertIn('prefers-reduced-motion:reduce',css)
 
+    def test_keepsake_front_back_and_pdf(self):
+        keep=ROOT/'dist/assets/keep'
+        for side in ['front','back']:
+            with Image.open(keep/f'romeos-health-heaven-card-{side}.png') as image:
+                self.assertEqual(image.size,(2400,1600))
+            self.assertLess((keep/f'romeos-health-heaven-card-{side}.png').stat().st_size,1_000_000)
+            self.assertIn(f'/assets/keep/romeos-health-heaven-card-{side}.png',self.html)
+        pdf=(keep/'romeos-health-heaven-card.pdf').read_bytes()
+        self.assertTrue(pdf.startswith(b'%PDF'))
+        self.assertEqual(len(re.findall(rb'/Type\s*/Page\b',pdf)),2)
+        # Large keepsakes are fetched on request, never precached for every visitor.
+        self.assertNotIn('/assets/keep/',(ROOT/'dist/sw.js').read_text())
+        self.assertIn('"keep"',(ROOT/'dist/config.mjs').read_text())
+
     def test_preview_indexing_does_not_block_social_crawlers(self):
         self.assertIn('User-agent: *\nAllow: /',(ROOT/'dist/robots.txt').read_text())
         if not self.c['indexable']:

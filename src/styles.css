@@ -217,4 +217,14 @@
 #romeo-ivory .rv-overline,#romeo-ivory .rv-founder,#romeo-ivory .rv-hint,#romeo-ivory .rv-address,#romeo-ivory .rv-ticket-sub,#romeo-ivory .rv-back-role,#romeo-ivory .rv-sample span{color:#65705c}
 #romeo-ivory .rv-contact-field small{color:#70745e}
 @media(max-width:560px){body{padding:10px 0}#romeo-ivory .rv-world{border-radius:0}#romeo-ivory .rv-back-foot .rv-plain{min-height:44px}#romeo-ivory .rv-contact-link{min-height:40px}#romeo-ivory .rv-back-foot{margin-top:2px;padding-top:0}}
+#romeo-ivory .rv-keep-preview{position:relative;height:150px;margin:16px 0 18px}
+#romeo-ivory .rv-keep-preview img{position:absolute;top:0;width:64%;height:auto;border-radius:8px;border:1px solid #ddd5c1;box-shadow:0 2px 0 #e0d8c4,0 10px 16px #5c56362a}
+#romeo-ivory .rv-keep-back{left:2%;transform:rotate(-5deg) translateY(10px)}
+#romeo-ivory .rv-keep-front{right:2%;transform:rotate(3.5deg) translateY(36px)}
+#romeo-ivory .rv-keep-action{width:100%;min-height:46px}
+#romeo-ivory .rv-keep-help{margin-top:11px}
+#romeo-ivory .rv-keep-files{border-top:0;gap:14px}
+#romeo-ivory .rv-keep-more{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:9px}
+#romeo-ivory .rv-install-help{margin-top:12px}
+@media(max-width:355px){#romeo-ivory .rv-keep-preview{height:128px}#romeo-ivory .rv-keep-more{grid-auto-flow:row}}
 @media(prefers-reduced-motion:reduce){#romeo-ivory .rv-tool:hover,#romeo-ivory .rv-sample:hover{transform:none}#romeo-ivory .rv-ribbon:hover{right:-27px}#romeo-ivory .rv-seal:hover{transform:translateZ(29px)}}

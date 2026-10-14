@@ -1,1 +1,1 @@
-export default {"brand": "Romeo’s Health Heaven", "founder": "Romeo", "cardUrl": "https://hello.romeoshealthheaven.com/"};
+export default {"brand": "Romeo’s Health Heaven", "founder": "Romeo", "cardUrl": "https://hello.romeoshealthheaven.com/", "keep": {"front": "/assets/keep/romeos-health-heaven-card-front.png", "back": "/assets/keep/romeos-health-heaven-card-back.png", "pdf": "/assets/keep/romeos-health-heaven-card.pdf"}};

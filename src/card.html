@@ -42,18 +42,22 @@
      <div class="rv-share-channels" aria-label="More ways to share"><a data-channel="whatsapp" href="{{whatsappShare}}" target="_blank" rel="noopener noreferrer">WhatsApp <i data-lucide="arrow-up-right" aria-hidden="true"></i></a><a data-channel="email" href="{{emailShare}}">Email <i data-lucide="mail" aria-hidden="true"></i></a></div><div class="rv-downloads"><a href="/assets/qr-card.png" download="romeo-card-qr.png"><i data-lucide="download" aria-hidden="true"></i>QR image</a><a href="{{socialImagePath}}" download="romeo-health-heaven-card.jpg"><i data-lucide="download" aria-hidden="true"></i>Card image</a></div><p class="rv-address">{{cardHost}}</p>
     </div>
    </section>
-   <section class="rv-drawer" id="save-panel" data-drawer="save" aria-label="Pull-out contact slip" aria-hidden="true" inert>
+   <section class="rv-drawer" id="save-panel" data-drawer="save" aria-label="Pull-out keepsake: the card and contact to keep" aria-hidden="true" inert>
     <div class="rv-ticket">
-     <div class="rv-ticket-top"><p class="rv-ticket-tag">Keep a little connection</p><button class="rv-close cursor-interaction" data-do="close" type="button" aria-label="Put away the contact slip"><i data-lucide="x" aria-hidden="true"></i></button></div>
-     <h2>Romeo’s<br><em>Health Heaven</em></h2>
-     <p class="rv-ticket-sub">Brooklyn, New York</p>
-     <div class="rv-contact-strip">
-      <div class="rv-contact-field"><i data-lucide="phone" aria-hidden="true"></i><span><small>Phone</small>{{phoneDisplay}}</span></div>
-      <div class="rv-contact-field"><i data-lucide="mail" aria-hidden="true"></i><span><small>Email</small>{{email}}</span></div>
-      <div class="rv-contact-field"><i data-lucide="globe" aria-hidden="true"></i><span><small>Website</small>romeoshealthheaven.com</span></div>
+     <div class="rv-ticket-top"><p class="rv-ticket-tag">Yours to keep</p><button class="rv-close cursor-interaction" data-do="close" type="button" aria-label="Put away the keepsake"><i data-lucide="x" aria-hidden="true"></i></button></div>
+     <h2>Keep the card.<br><em>Front &amp; back.</em></h2>
+     <p class="rv-ticket-sub">Saved to your phone or computer, it opens anytime, even offline.</p>
+     <div class="rv-keep-preview" aria-hidden="true"><img class="rv-keep-back" src="{{keepBackThumb}}" width="560" height="320" loading="lazy" alt=""><img class="rv-keep-front" src="{{keepFrontThumb}}" width="560" height="320" loading="lazy" alt=""></div>
+     <button class="rv-ticket-button rv-fill rv-keep-action cursor-interaction" data-do="keep" type="button"><i data-lucide="download" aria-hidden="true"></i><span class="rv-keep-label">Save front &amp; back</span></button>
+     <p class="rv-save-help rv-keep-help">Both sides in one PDF that opens on any device.</p>
+     <div class="rv-downloads rv-keep-files" aria-label="Download one side at a time"><a href="{{keepFront}}" download="romeos-health-heaven-card-front.png"><i data-lucide="download" aria-hidden="true"></i>Front image</a><a href="{{keepBack}}" download="romeos-health-heaven-card-back.png"><i data-lucide="download" aria-hidden="true"></i>Back image</a><a href="{{keepPdf}}" download="romeos-health-heaven-card.pdf"><i data-lucide="download" aria-hidden="true"></i>PDF</a></div>
+     <div class="rv-perforation" aria-hidden="true"></div>
+     <div class="rv-keep-more">
+      <a class="rv-ticket-button cursor-interaction" data-do="contact" href="/romeo-health-heaven.vcf"><i data-lucide="user-round-plus" aria-hidden="true"></i><span class="rv-save-label">Add contact</span></a>
+      <button class="rv-ticket-button cursor-interaction" data-do="install" type="button" aria-label="Add to home screen" hidden><i data-lucide="smartphone" aria-hidden="true"></i><span>Home screen</span></button>
      </div>
-     <a class="rv-ticket-button rv-fill rv-save-action" data-do="contact" href="/romeo-health-heaven.vcf"><i data-lucide="user-round-plus" aria-hidden="true"></i><span class="rv-save-label">Open contact</span></a>
-     <p class="rv-save-help">A contact file for your phone or computer.<br>Open it, then confirm Add or Save.</p><a class="rv-vcf-download" href="/romeo-health-heaven.vcf" download="romeo-health-heaven.vcf">Download .vcf file</a>
+     <p class="rv-save-help rv-install-help" hidden></p>
+     <a class="rv-vcf-download" href="/romeo-health-heaven.vcf" download="romeo-health-heaven.vcf">Download .vcf file</a>
     </div>
    </section>
    <section class="rv-drawer rv-taste-drawer" id="taste-panel" data-drawer="taste" aria-label="Pull-out tasting collection" aria-hidden="true" inert>
@@ -69,7 +73,7 @@
   </div>
   <nav class="rv-dock" aria-label="Card actions">
    <button class="rv-tool cursor-interaction" data-do="flip" type="button" aria-label="Turn the card over"><i data-lucide="rotate-3d" aria-hidden="true"></i></button>
-   <button class="rv-tool cursor-interaction" aria-controls="save-panel" data-do="save" type="button" aria-expanded="false"><i data-lucide="bookmark" aria-hidden="true"></i>Save contact</button>
+   <button class="rv-tool cursor-interaction" aria-controls="save-panel" data-do="save" type="button" aria-expanded="false"><i data-lucide="download" aria-hidden="true"></i>Keep card</button>
    <button class="rv-tool rv-primary cursor-interaction" aria-controls="share-panel" data-do="share" type="button" aria-expanded="false"><i data-lucide="share-2" aria-hidden="true"></i>Share card</button>
   </nav>
   <p class="rv-hint">Press the seal to meet Romeo.</p>

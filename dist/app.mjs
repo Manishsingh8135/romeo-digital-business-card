@@ -1,5 +1,5 @@
 import config from './config.mjs';
-import { nativeShare, copyCard } from './sharing.mjs';
+import { nativeShare, copyCard, isAppleTouch, keepRoute, loadKeepFiles, shareImages } from './sharing.mjs';
 
 const root = document.getElementById('romeo-ivory');
 const stage = root.querySelector('.rv-stage');
@@ -12,6 +12,8 @@ let returnFocus = null;
 let wakeLock = null;
 let wakePending = false;
 let sharePending = false;
+const keep = { route: keepRoute(navigator), files: null, loading: null, pending: false };
+let installPrompt = null;
 
 function fitStage() {
   if (state.mode === 'rest') {
@@ -70,7 +72,7 @@ function render() {
   hint.textContent = {
     rest: state.flipped ? 'A little connection goes a long way.' : 'Press the seal to meet Romeo.',
     share: 'A clear QR, ready for the person beside you.',
-    save: 'Confirm the new contact in your contacts app.',
+    save: 'Front and back, to keep on any device.',
     taste: 'A few things we make, with a little care.',
   }[state.mode];
   fitStage();
@@ -99,6 +101,84 @@ function open(mode, trigger) {
   root.querySelector(`[data-drawer="${mode}"] .rv-close`).focus({ preventScroll: true });
 }
 
+// Fetch ahead of the tap: Safari only opens the share sheet if share() follows the click directly.
+function prepareKeepFiles() {
+  if (keep.route !== 'share-images' || keep.files || keep.loading) return keep.loading;
+  keep.loading = loadKeepFiles(url => fetch(url), config)
+    .then(files => { keep.files = files; return files; })
+    .catch(() => { keep.route = 'download'; showKeepRoute(); return null; })
+    .finally(() => { keep.loading = null; });
+  return keep.loading;
+}
+
+function showKeepRoute() {
+  const photos = keep.route === 'share-images';
+  root.querySelector('.rv-keep-label').textContent = photos ? 'Save to Photos' : 'Save front & back';
+  root.querySelector('.rv-keep-help').textContent = photos
+    ? 'Choose “Save 2 Images” to keep both sides in Photos.'
+    : 'Both sides in one PDF that opens on any device.';
+}
+
+function downloadPdf() {
+  root.querySelector('.rv-keep-files a[href$=".pdf"]').click();
+  status.textContent = 'Downloading both sides as a PDF. You’ll find it in Downloads.';
+}
+
+async function keepCard() {
+  if (keep.pending) return;
+  if (keep.route !== 'share-images') return downloadPdf();
+  if (!keep.files) {
+    // The first tap came before the images arrived; the next tap opens the share sheet.
+    keep.pending = true;
+    status.textContent = 'Getting both sides ready…';
+    await prepareKeepFiles();
+    keep.pending = false;
+    if (keep.route !== 'share-images') return downloadPdf();
+    status.textContent = 'Ready. Tap Save to Photos again.';
+    return;
+  }
+  keep.pending = true;
+  const result = await shareImages(navigator, keep.files);
+  keep.pending = false;
+  if (result === 'unsupported' || result === 'failed') {
+    keep.route = 'download';
+    showKeepRoute();
+    downloadPdf();
+  } else {
+    status.textContent = '';
+  }
+}
+
+function isInstalled() {
+  return matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+}
+
+function showInstall() {
+  const button = root.querySelector('[data-do="install"]');
+  const hadFocus = document.activeElement === button;
+  button.hidden = isInstalled() || !(installPrompt || isAppleTouch(navigator));
+  if (!button.hidden) return;
+  root.querySelector('.rv-install-help').hidden = true;
+  // Hiding a focused button would drop focus to the page, out of reach of Escape.
+  if (hadFocus) root.querySelector('.rv-keep-more [data-do="contact"]').focus({ preventScroll: true });
+}
+
+async function install() {
+  const help = root.querySelector('.rv-install-help');
+  if (installPrompt) {
+    const prompt = installPrompt;
+    installPrompt = null;
+    await prompt.prompt();
+    const { outcome } = await prompt.userChoice;
+    status.textContent = outcome === 'accepted' ? 'Added. Romeo’s card now has its own icon.' : '';
+    showInstall();
+    return;
+  }
+  help.textContent = 'In Safari, tap Share, then “Add to Home Screen”. The card gets its own icon and opens even offline.';
+  help.hidden = false;
+  fitStage();
+}
+
 function showCopyFallback() {
   const fallback = root.querySelector('.rv-copy-fallback');
   fallback.hidden = false;
@@ -121,6 +201,7 @@ root.addEventListener('click', async event => {
     root.querySelector('.rv-dock [data-do="flip"]').focus({ preventScroll: true });
   } else if (['share', 'save', 'taste'].includes(action)) {
     open(action, actionElement);
+    if (state.mode === 'save') void prepareKeepFiles();
   } else if (action === 'close') {
     close();
   } else if (action === 'copy') {
@@ -144,6 +225,10 @@ root.addEventListener('click', async event => {
       // Resolution doesn't prove delivery to another person.
       status.textContent = '';
     }
+  } else if (action === 'keep') {
+    await keepCard();
+  } else if (action === 'install') {
+    await install();
   } else if (action === 'contact') {
     status.textContent = 'Your device will ask you to open or save the contact file.';
   }
@@ -163,6 +248,17 @@ document.fonts?.ready.then(fitStage);
 if (typeof navigator.share !== 'function') {
   root.querySelector('.rv-send-label').textContent = 'Share options';
 }
+showKeepRoute();
+window.addEventListener('beforeinstallprompt', event => {
+  event.preventDefault();
+  installPrompt = event;
+  showInstall();
+});
+window.addEventListener('appinstalled', () => {
+  installPrompt = null;
+  showInstall();
+});
+showInstall();
 if (new URLSearchParams(location.search).get('view') === 'share') state.mode = 'share';
 render();
 

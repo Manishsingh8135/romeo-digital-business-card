@@ -36,3 +36,41 @@ export async function copyCard(browserNavigator, config) {
     return false;
   }
 }
+
+// iPhone and iPad (including iPadOS's desktop-class Safari), where “Save Image” lives in the share sheet.
+export function isAppleTouch(browserNavigator) {
+  const agent = browserNavigator.userAgent || '';
+  return /iPhone|iPad|iPod/.test(agent) || (/Macintosh/.test(agent) && browserNavigator.maxTouchPoints > 1);
+}
+
+// Apple touch devices save shared images straight to Photos; everywhere else one PDF download
+// avoids the browser's “multiple downloads” prompt and opens on any device.
+export function keepRoute(browserNavigator, FileType = globalThis.File) {
+  if (!isAppleTouch(browserNavigator) || typeof browserNavigator.share !== 'function' || typeof FileType !== 'function') return 'download';
+  try {
+    const probe = new FileType([''], 'probe.png', { type: 'image/png' });
+    return browserNavigator.canShare?.({ files: [probe] }) ? 'share-images' : 'download';
+  } catch {
+    return 'download';
+  }
+}
+
+export async function loadKeepFiles(fetcher, config, FileType = globalThis.File) {
+  return Promise.all(['front', 'back'].map(async side => {
+    const response = await fetcher(config.keep[side]);
+    if (!response.ok) throw new Error(`Card ${side} unavailable`);
+    const name = config.keep[side].split('/').pop();
+    return new FileType([await response.blob()], name, { type: 'image/png' });
+  }));
+}
+
+export async function shareImages(browserNavigator, files) {
+  // Files only: adding text or a URL hides “Save Image” on iOS.
+  if (!browserNavigator.canShare?.({ files })) return 'unsupported';
+  try {
+    await browserNavigator.share({ files });
+    return 'completed';
+  } catch (error) {
+    return error?.name === 'AbortError' ? 'cancelled' : 'failed';
+  }
+}

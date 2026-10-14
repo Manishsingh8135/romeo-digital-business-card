@@ -65,7 +65,7 @@ On Windows, activate with `.venv\Scripts\activate` instead.
 - `src/card.html`: card layout and copy.
 - `src/styles.css`: responsive layout, depth, purposeful transitions, reduced-motion rules.
 - `src/app.mjs`: card interactions and browser fallbacks.
-- `scripts/build.py`: metadata, QR, vCard, preview image, icons, manifest, hosting headers, offline shell.
+- `scripts/build.py`: metadata, QR, vCard, preview image, icons, keepsake front/back images and PDF (`dist/assets/keep/`), manifest, hosting headers, offline shell.
 - `dist/`: generated deployment output. Rebuild rather than editing it directly.
 
 Commit the source, regenerated `dist/`, and `vercel.json` together. A stale build fails Vercel's verification rather than silently publishing old contact details.

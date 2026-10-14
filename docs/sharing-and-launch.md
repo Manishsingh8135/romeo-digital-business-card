@@ -10,6 +10,8 @@
 - QR codes generated from the same configured URL as metadata, share actions, and vCard. Downloadable QR and card images.
 - A UTF-8 vCard 3.0 with CRLF line endings, byte-safe folding, a stable UID, and business contact details. The person must confirm import in their contacts app.
 - Phone, email, website, and shop links; no assumption that the business phone is registered with WhatsApp.
+- “Keep card” pull-out: the front and back, generated at build time from the card's own fonts and palette. iPhone/iPad get “Save to Photos” (native share sheet with both PNGs, prefetched so the sheet opens on the first tap). Other devices download one two-page, card-size PDF (avoids the browser's multiple-download prompt). Front image, back image, and PDF links remain for one-at-a-time saving. The back carries a QR code to the card. The keepsakes are excluded from the offline precache.
+- “Home screen” button: uses the browser's install prompt where offered (Chrome/Edge/Android), shows Safari's Share → Add to Home Screen steps on iPhone/iPad, and hides once installed.
 - Favicon, Apple touch icon, home-screen manifest, maskable icons, and a QR shortcut. Installation availability is controlled by the browser.
 - Offline shell after first successful production visit. Network responses are preferred while online; an offline message explains that shop/messaging need a connection. A copied contact does not automatically sync when the website changes.
 - Best-effort screen wake lock while the QR is visible, released when it closes or the page becomes hidden.
@@ -29,7 +31,7 @@ Browser checks covered desktop, 390px and 320px layouts, front/reverse, contact 
 3. Check the HTML and social image return 200 with correct MIME types for ordinary requests and social crawlers. Ensure the live page contains metadata before JavaScript executes.
 4. Paste the public URL into iMessage, WhatsApp, Facebook/LinkedIn, and X to inspect actual previews. Platforms can cache old data or crop images differently; local metadata tests are not proof of platform rendering.
 5. Scan the QR on a real iPhone and Android phone. Open/import the vCard and check name, company, phone, email, and URLs. Check native share cancellation and clipboard fallback in mobile/in-app browsers.
-6. Test home-screen launch, QR shortcut, and offline reopening after a successful online visit. Confirm reconnecting refreshes changed data.
+6. On a real iPhone, tap Keep card → Save to Photos and confirm both sides land in Photos; on Android and desktop confirm the PDF downloads and opens. Test home-screen launch, QR shortcut, and offline reopening after a successful online visit. Confirm reconnecting refreshes changed data.
 7. Set `indexable` to `true` if search visibility is wanted, then rebuild and deploy. Retest public metadata after changes.
 
 ## Optional later

@@ -51,6 +51,15 @@
           "value": "application/manifest+json"
         }
       ]
+    },
+    {
+      "source": "/assets/keep/(.*)",
+      "headers": [
+        {
+          "key": "Content-Disposition",
+          "value": "attachment"
+        }
+      ]
     }
   ]
 }

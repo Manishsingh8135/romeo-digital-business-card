@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('../dist/', import.meta.url));
 const headers = JSON.parse(await readFile(path.join(root, 'headers.json')));
-const types = { '.html':'text/html; charset=utf-8', '.css':'text/css; charset=utf-8', '.js':'text/javascript; charset=utf-8', '.mjs':'text/javascript; charset=utf-8', '.svg':'image/svg+xml', '.png':'image/png', '.jpg':'image/jpeg', '.webp':'image/webp', '.ico':'image/x-icon', '.ttf':'font/ttf', '.vcf':'text/vcard; charset=utf-8', '.webmanifest':'application/manifest+json', '.json':'application/json', '.txt':'text/plain; charset=utf-8', '.xml':'application/xml' };
+const types = { '.html':'text/html; charset=utf-8', '.css':'text/css; charset=utf-8', '.js':'text/javascript; charset=utf-8', '.mjs':'text/javascript; charset=utf-8', '.svg':'image/svg+xml', '.png':'image/png', '.jpg':'image/jpeg', '.webp':'image/webp', '.ico':'image/x-icon', '.ttf':'font/ttf', '.vcf':'text/vcard; charset=utf-8', '.webmanifest':'application/manifest+json', '.json':'application/json', '.txt':'text/plain; charset=utf-8', '.xml':'application/xml', '.pdf':'application/pdf' };
 const port = Number(process.env.PORT || 8767);
 http.createServer(async (request,response) => {
   if (!['GET','HEAD'].includes(request.method)) { response.writeHead(405); response.end(); return; }
